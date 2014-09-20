@@ -776,7 +776,7 @@ JustGage.prototype.kvLookup = function(key, tablea, tableb, defval, datatype, de
 };
 
 /** Refresh gauge level */
-JustGage.prototype.refresh = function(val, max) {
+JustGage.prototype.refresh = function(val, max, min) {
 
   var obj = this;
   var displayVal, color, max = max || null;
@@ -793,6 +793,20 @@ JustGage.prototype.refresh = function(val, max) {
     }
     obj.txtMax.attr({"text" : obj.txtMaximum});
     setDy(obj.txtMax, obj.params.maxFontSize, obj.params.maxY);
+  }
+  
+  //set new min
+  if(min !== null){
+    obj.config.min = min;
+      
+    obj.txtMinimum = obj.config.min;
+    if( obj.config.humanFriendly ) {
+        obj.txtMinimum = humanFriendlyNumber( obj.config.min, obj.config.humanFriendlyDecimal );
+    } else if ( obj.config.formatNumber ) {
+        obj.txtMinimum = formatNumber( obj.config.min );
+    }
+    obj.txtMin.attr({"text" : obj.txtMinimum});
+    setDy(obj.txtMin, obj.params.minFontSize, obj.params.minY);
   }
 
   // overflow values
